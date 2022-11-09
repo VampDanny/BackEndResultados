@@ -1,0 +1,5 @@
+{
+    "MONGO_URI_SERVER" : "mongodb+srv://TutoriaDomingo:Danny12345@cluster0.u6kujme.mongodb.net/?retryWrites=true&w=majority",
+    "MONGO_URI_LOCAL" : "mongodb://localhost" ,
+    "LOCAL_HOST" : 27017
+}
