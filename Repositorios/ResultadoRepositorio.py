@@ -13,13 +13,13 @@ class ResultadoRepositorio(InterfazRepositorio[Resultado]):
         theQuery = {"candidato.$id": ObjectId(id_candidato)}
         return self.query(theQuery)
 
-    # Numero de Votos por candidato
+    # Numero de Votos Totales
     def getTotalVotos(self):
         query = {
             "$group":{
                 "_id": "$candidato",
-                "total_votos_candidato": {
-                    "$sum": "1"
+                "total_votos": {
+                    "$sum": 1
                 },
                 "doc": {
                     "$first": "$$ROOT"
@@ -27,4 +27,36 @@ class ResultadoRepositorio(InterfazRepositorio[Resultado]):
             }
         }
         pipeline = [query]
+        return self.queryAggregation(pipeline)
+    
+    # Numero de Votos Totales por Candidato
+    def getTotalVotosCandidato(self, id_candidato):
+        query1 = {
+          "$match": {"candidato.$id": ObjectId(id_candidato)}
+        }
+        query2 = {
+          "$group": {
+            "_id": "$candidato",
+            "votos_candidato": {
+              "$sum": 1
+            }
+          }
+        }
+        pipeline = [query1,query2]
+        return self.queryAggregation(pipeline)
+
+    # Numero de Votos Totales por Partido
+    def getTotalVotosPartido(self, id_candidato):
+        query1 = {
+          "$match": {"partido.$id": ObjectId(id_candidato)}
+        }
+        query2 = {
+          "$group": {
+            "_id": "$partido",
+            "votos_partido": {
+              "$sum": 1
+            }
+          }
+        }
+        pipeline = [query1,query2]
         return self.queryAggregation(pipeline)

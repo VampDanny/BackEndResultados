@@ -179,6 +179,17 @@ def getVotos():
     json = miControladorResultado.getVotos()
     return jsonify(json)
 
+#Buscar Total Votos por Candidato
+@app.route("/resultados/votos/candidato/<string:id_candidato>", methods=["GET"])
+def getVotosCandidato(id_candidato):
+    json = miControladorResultado.getVotosCandidato(id_candidato)
+    return jsonify(json)
+
+#Buscar Total Votos por Partido
+@app.route("/resultados/votos/partido/<string:id_partido>", methods=["GET"])
+def getVotosPartido(id_candidato):
+    json = miControladorResultado.getVotosPartido(id_candidato)
+    return jsonify(json)
 
 
 
