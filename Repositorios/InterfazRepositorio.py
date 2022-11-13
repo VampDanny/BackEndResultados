@@ -1,8 +1,10 @@
+import json
+from typing import Generic, List, TypeVar, get_args, get_origin
+
+import database.database as dbase
 from bson import DBRef
 from bson.objectid import ObjectId
-from typing import TypeVar, Generic, List, get_origin, get_args
-import json
-import database.database as dbase
+
 T = TypeVar('T')
 
 class InterfazRepositorio(Generic[T]):
