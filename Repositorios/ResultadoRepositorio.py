@@ -46,9 +46,9 @@ class ResultadoRepositorio(InterfazRepositorio[Resultado]):
         return self.queryAggregation(pipeline)
 
     # Numero de Votos Totales por Partido
-    def getTotalVotosPartidos(self, id_partido):
+    def getVotosPartidos(self):
         query1 = {
-          "$match": {"partido.$id": ObjectId(id_partido)}
+          "$match": {"candidato.partido.$id"}
         }
         query2 = {
           "$group": {
