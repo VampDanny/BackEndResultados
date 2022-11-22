@@ -29,6 +29,22 @@ class ResultadoRepositorio(InterfazRepositorio[Resultado]):
         pipeline = [query]
         return self.queryAggregation(pipeline)
     
+    # Numero de Votos Totales por Mesa
+    def getTotalVotosMesas(self):
+        query = {
+            "$group":{
+                "_id": "$mesa",
+                "total_votos": {
+                    "$sum": 1
+                },
+                "doc": {
+                    "$first": "$$ROOT"
+                }
+            }
+        }
+        pipeline = [query]
+        return self.queryAggregation(pipeline)
+
     # Numero de Votos Totales por Candidato
     def getTotalVotosCandidato(self, id_candidato):
         query1 = {

@@ -46,6 +46,9 @@ class ResultadoControlador():
 
     def getVotos(self):
         return self.repositorioResultado.getTotalVotos()
+    
+    def getVotosMesas(self):
+        return self.repositorioResultado.getTotalVotosMesas()
 
     def getVotosCandidato(self, id_candidato):
         return self.repositorioResultado.getTotalVotosCandidato(id_candidato)
