@@ -62,17 +62,34 @@ class ResultadoRepositorio(InterfazRepositorio[Resultado]):
         return self.queryAggregation(pipeline)
 
     # Numero de Votos Totales por Partido
-    def getVotosPartidos(self):
-        query1 = {
-          "$match": {"candidato.partido.$id"}
+    def getTotalVotosPartidos(self):
+        {
+        '$lookup': {
+            'from': 'resultado', 
+            'localField': 'resultado.$id', 
+            'foreignField': '_id', 
+            'as': 'resultado'
         }
-        query2 = {
-          "$group": {
-            "_id": "$partido",
-            "votos_partido": {
-              "$sum": 1
+    }, 
+    {
+        '$set': {
+            'resultado': {
+                '$first': '$resultado'
             }
-          }
         }
-        pipeline = [query1,query2]
-        return self.queryAggregation(pipeline)
+    }, {
+        '$group': {
+            '_id': '$resultado.partido.$id', 
+            'sumaVotosPartido': {
+                '$sum': '$Votos_por_Partido'
+            }, 
+            'partido': {
+                '$first': '$resultado.partido'
+            }
+        }
+    }, {
+        '$sort': {
+            'sumaVotosPartido': -1
+        }
+    }
+
